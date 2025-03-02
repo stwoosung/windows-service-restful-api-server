@@ -1,2 +1,10 @@
-# windows-service-api-server
-윈도우 서비스(백그라운드) 모드에서 구동되는 API 서버
+# 📌 Information
+### ✨ Version
+- OS: Windows 10/11
+- IDE: Visual Studio 2022 Community
+- Language: C#(.Net 4.8)
+
+<br><br><br><br><br>
+# 📌 Architecture
+
+<img src="./architecture.png"/>
