@@ -7,4 +7,4 @@
 <br><br><br><br><br>
 # 📌 Architecture
 
-<img src="./architecture.png"/>
+<img src="./architecture.jpg"/>
