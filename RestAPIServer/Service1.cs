@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection.Emit;
+﻿using RestAPIServer.UserDefineClass;
+using System;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RestAPIServer
 {
     public partial class RestAPIServerService : ServiceBase
     {
-            Thread workerThread = new Thread(DoWork);
-        private static bool keepRunning = true;
+
+        public RestAPIScenarioControl restAPIScenario;
 
 
         public RestAPIServerService()
@@ -43,63 +34,31 @@ namespace RestAPIServer
 
         protected override void OnStop()
         {
-            string exePath = AppDomain.CurrentDomain.BaseDirectory;
-            string logFilePath = Path.Combine(exePath, "log.log");
-
-            // "Start" 메시지 로그 파일에 기록
             try
             {
-                using (StreamWriter writer = new StreamWriter(logFilePath, true)) // true로 설정하면 기존 내용 뒤에 추가
-                {
-                    writer.WriteLine("STOP");
-                }
-
-                Console.WriteLine("Log written to log.log");
+                restAPIScenario.Stop();
+                restAPIScenario = null;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine($"Error writing to log file: {ex.Message}");
+                // logControl.LogWrite("S1RestAPIServer", "OnStart", e.Message);
             }
-
-            workerThread.Abort();
-            Debug.WriteLine("Sss");
         }
 
         public void fnStartRestAPIService(string[] args)
         {
-            Debug.WriteLine("sdsd");
-
-
-            workerThread.Start();
-
-
-        }
-
-        static void DoWork()
-        {
-            while (keepRunning)
+            if (args.Length > 0 && args[0].Equals("-debug", StringComparison.OrdinalIgnoreCase))
             {
-                string exePath = AppDomain.CurrentDomain.BaseDirectory;
-                string logFilePath = Path.Combine(exePath, "log.log");
-
-                // "Start" 메시지 로그 파일에 기록
-                try
-                {
-                    using (StreamWriter writer = new StreamWriter(logFilePath, true)) // true로 설정하면 기존 내용 뒤에 추가
-                    {
-                        writer.WriteLine("Start");
-                    }
-
-                    Console.WriteLine("Log written to log.log");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error writing to log file: {ex.Message}");
-                }
-
-
-                Thread.Sleep(1000); // 1초 대기
+                restAPIScenario = new RestAPIScenarioControl(args[0]);
+                restAPIScenario.Start();
             }
+            else
+            {
+                restAPIScenario = new RestAPIScenarioControl("release");
+                restAPIScenario.Start();
+            }
+
         }
+
     }
 }
