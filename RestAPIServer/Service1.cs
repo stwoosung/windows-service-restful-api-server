@@ -1,4 +1,5 @@
-﻿using RestAPIServer.UserDefineClass;
+﻿using RestAPIServer.LibClass;
+using RestAPIServer.UserDefineClass;
 using System;
 using System.ServiceProcess;
 
@@ -7,6 +8,7 @@ namespace RestAPIServer
     public partial class RestAPIServerService : ServiceBase
     {
 
+        LogControl logControl = new LogControl();
         public RestAPIScenarioControl restAPIScenario;
 
 
@@ -28,7 +30,7 @@ namespace RestAPIServer
             }
             catch (Exception e)
             {
-                // logControl.LogWrite("S1RestAPIServer", "OnStart", e.Message);
+                logControl.WriteLog("RestAPIServer", "OnStart", e.Message);
             }
         }
 
@@ -41,7 +43,7 @@ namespace RestAPIServer
             }
             catch (Exception e)
             {
-                // logControl.LogWrite("S1RestAPIServer", "OnStart", e.Message);
+                logControl.WriteLog("RestAPIServer", "OnStart", e.Message);
             }
         }
 

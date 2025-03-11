@@ -1,5 +1,7 @@
-﻿using System;
+﻿using RestAPIServer.LibClass;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -9,10 +11,11 @@ namespace RestAPIServer.UserDefineClass
 {
     public class RestAPIScenarioControl
     {
+        LogControl logControl = new LogControl();
         public RestAPIScenario mRestAPIScenario = null;
         Thread ThreadRestAPISecenario = null;
 
-        string ServiceName = System.IO.Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
+        string ServiceName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
 
         public RestAPIScenarioControl(string arg)
         {
@@ -30,7 +33,7 @@ namespace RestAPIServer.UserDefineClass
             }
             catch (Exception a)
             {
-                // logControl.LogWrite(ServiceName, "ServiceStart", a.Message);
+                logControl.WriteLog(ServiceName, "ServiceStart", a.Message);
             }
         }
 
@@ -104,7 +107,7 @@ namespace RestAPIServer.UserDefineClass
 
                             HttpListenerContext context = this.httpListener.GetContext();
 
-                            // GET 요청만 판단
+                            // enum에 포함된 HTTP 요청만 판단
                             string httpmethod = context.Request.HttpMethod;
                             if (!Enum.IsDefined(typeof(HttpMethodType), httpmethod)) continue;
 

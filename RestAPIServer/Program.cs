@@ -1,10 +1,12 @@
-﻿using System;
+﻿using RestAPIServer.LibClass;
+using System;
 using System.ServiceProcess;
 
 namespace RestAPIServer
 {
     internal static class Program
     {
+        static LogControl logControl = new LogControl();
 
         static void Main(string[] args)
         {
@@ -30,12 +32,14 @@ namespace RestAPIServer
                             }
                             else if (args[0].Equals("-debug", StringComparison.OrdinalIgnoreCase))
                             {
+                                LogControl.isDebugMode = args[0];
+                                
                                 RestAPIServerService service = new RestAPIServerService();
                                 service.fnStartAndStopService(args);
                             }
                             else
                             {
-                                Console.WriteLine("Invalid argument!");
+                                logControl.WriteConsoleLog("Invalid argument!");
                             }
                         }
                     }
@@ -46,9 +50,9 @@ namespace RestAPIServer
                     }
                 }
             }
-            catch (Exception a)
+            catch (Exception e)
             {
-                // logControl.LogWrite("S1RestAPIServer", "Main", a.Message);
+                logControl.WriteLog("RestAPIServer", "Main", e.Message);
             }
         }
 
