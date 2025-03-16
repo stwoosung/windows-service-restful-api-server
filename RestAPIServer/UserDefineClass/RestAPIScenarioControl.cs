@@ -146,8 +146,10 @@ namespace RestAPIServer.UserDefineClass
                     {
                         httpListener.Stop();
                     }
+                    httpListener = null;
                     logControl.WriteLog(ServiceName, "Stop", "Stop Service", LogControl.LogLevel.Info);
-                    Environment.Exit(0);
+                    
+                    // Environment.Exit(0);
                 }
                 catch (Exception a)
                 {

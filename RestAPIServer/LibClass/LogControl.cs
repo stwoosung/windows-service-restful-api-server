@@ -59,7 +59,7 @@ namespace RestAPIServer.LibClass
                 {
                     using (StreamWriter sw = new StreamWriter(FilePath))
                     {
-                        temp = string.Format("[{0}][{3}] {1} : {2}", DateTime.Now, strTitle, strComment, isDebugMode);
+                        temp = string.Format("[{0}][{3}] {1} : {2}", DateTime.Now, strTitle, strComment, stLogLevel);
                         sw.WriteLine(temp);
                         sw.Close();
                     }
@@ -68,7 +68,7 @@ namespace RestAPIServer.LibClass
                 {
                     using (StreamWriter sw = File.AppendText(FilePath))
                     {
-                        temp = string.Format("[{0}][{3}] {1} : {2}", DateTime.Now, strTitle, strComment, isDebugMode);
+                        temp = string.Format("[{0}][{3}] {1} : {2}", DateTime.Now, strTitle, strComment, stLogLevel);
                         sw.WriteLine(temp);
                         sw.Close();
                     }
