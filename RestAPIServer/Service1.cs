@@ -17,7 +17,7 @@ namespace RestAPIServer
             InitializeComponent();
         }
 
-        public void fnStartAndStopService(string[] args)
+        public void FnStartService(string[] args)
         {
             this.OnStart(args);
         }
@@ -26,11 +26,14 @@ namespace RestAPIServer
         {
             try
             {
-                fnStartRestAPIService(args);
+                if (args.Length != 0) LogControl.isDebugMode = args[0];
+
+                restAPIScenario = new RestAPIScenarioControl();
+                restAPIScenario.Start();
             }
             catch (Exception e)
             {
-                logControl.WriteLog("RestAPIServer", "OnStart", e.Message);
+                logControl.WriteLog("RestAPIServer", "OnStart", e.Message, LogControl.LogLevel.Error);
             }
         }
 
@@ -43,24 +46,10 @@ namespace RestAPIServer
             }
             catch (Exception e)
             {
-                logControl.WriteLog("RestAPIServer", "OnStart", e.Message);
+                logControl.WriteLog("RestAPIServer", "OnStop", e.Message, LogControl.LogLevel.Error);
             }
         }
 
-        public void fnStartRestAPIService(string[] args)
-        {
-            if (args.Length > 0 && args[0].Equals("-debug", StringComparison.OrdinalIgnoreCase))
-            {
-                restAPIScenario = new RestAPIScenarioControl(args[0]);
-                restAPIScenario.Start();
-            }
-            else
-            {
-                restAPIScenario = new RestAPIScenarioControl("release");
-                restAPIScenario.Start();
-            }
-
-        }
 
     }
 }

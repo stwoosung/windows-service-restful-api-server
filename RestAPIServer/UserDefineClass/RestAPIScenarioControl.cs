@@ -11,15 +11,15 @@ namespace RestAPIServer.UserDefineClass
 {
     public class RestAPIScenarioControl
     {
-        LogControl logControl = new LogControl();
-        public RestAPIScenario mRestAPIScenario = null;
-        Thread ThreadRestAPISecenario = null;
+        private LogControl logControl = new LogControl();
+        private RestAPIScenario mRestAPIScenario = null;
+        private Thread ThreadRestAPISecenario = null;
 
-        string ServiceName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
+        private string ServiceName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
 
-        public RestAPIScenarioControl(string arg)
+        public RestAPIScenarioControl()
         {
-            mRestAPIScenario = new RestAPIScenario(arg);
+            mRestAPIScenario = new RestAPIScenario();
         }
 
 
@@ -31,9 +31,9 @@ namespace RestAPIServer.UserDefineClass
                 ThreadRestAPISecenario.Priority = ThreadPriority.Normal;
                 ThreadRestAPISecenario.Start();
             }
-            catch (Exception a)
+            catch (Exception e)
             {
-                logControl.WriteLog(ServiceName, "ServiceStart", a.Message);
+                logControl.WriteLog(ServiceName, "ServiceStart", e.Message, LogControl.LogLevel.Error);
             }
         }
 
@@ -43,28 +43,31 @@ namespace RestAPIServer.UserDefineClass
             {
                 mRestAPIScenario.Stop();
             }
-            catch (Exception a)
+            catch (Exception e)
             {
-                // logControl.LogWrite(ServiceName, "ServiceStop", a.Message);
+                logControl.WriteLog(ServiceName, "ServiceStop", e.Message, LogControl.LogLevel.Error);
             }
         }
 
 
         public class RestAPIScenario
         {
-            public string strArg = string.Empty;
+            private LogControl logControl = new LogControl();
+            private string ServiceName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
+            private JsonHelpClass JsonHelp;
+
             private bool bExit = false;
 
-            public int Period;
-            public DateTime CurTime;
-            public DateTime OldTime;
+            private int Period;
+            private DateTime CurTime;
+            private DateTime OldTime;
 
-            public string ServerIP = "127.0.0.1";
-            public string ServerPort = "8888";
+            private string ServerIP;
+            private string ServerPort;
 
-            public HttpListener httpListener;
+            private HttpListener httpListener;
 
-            enum HttpMethodType
+            private enum HttpMethodType
             {
                 // POST,
                 GET,
@@ -72,9 +75,9 @@ namespace RestAPIServer.UserDefineClass
                 // DELETE
             }
 
-            public RestAPIScenario(string arg)
+            public RestAPIScenario()
             {
-                strArg = arg;
+
             }
 
             public void Init()
@@ -82,59 +85,54 @@ namespace RestAPIServer.UserDefineClass
                 try
                 {
                     OldTime = DateTime.Now;
-                }
-                catch (Exception a)
-                {
+                    JsonHelp = new JsonHelpClass();
 
+
+                    ServerIP = JsonHelp.FnGetPkgInfo("HOST") ?? "127.0.0.1";
+                    ServerPort = JsonHelp.FnGetPkgInfo("PORT") ?? "8888";
+                    Period = int.Parse(JsonHelp.FnGetPkgInfo("PERIOD") ?? "1000");
+                }
+                catch (Exception e)
+                {
+                    logControl.WriteLog(ServiceName, "Init", e.Message, LogControl.LogLevel.Error);
                 }
             }
 
-            public void fnRunRestAPIServer()
+            public void FnRunRestAPIServer()
             {
-                if (httpListener == null || !httpListener.IsListening)
-                {
-                    httpListener = new HttpListener();
-                    httpListener.Prefixes.Add(string.Format("http://+:" + ServerPort + "/"));
-                    httpListener.Start();
-
-                    string msg = string.Format("http://{0}:{1} 구동 완료", ServerIP, ServerPort);
-                    // logControl.LogWrite(ServiceName, "fnRunRestAPIServer", msg);
-
-                    Task.Factory.StartNew(() =>
-                    {
-                        while (httpListener != null)
-                        {
-
-                            HttpListenerContext context = this.httpListener.GetContext();
-
-                            // enum에 포함된 HTTP 요청만 판단
-                            string httpmethod = context.Request.HttpMethod;
-                            if (!Enum.IsDefined(typeof(HttpMethodType), httpmethod)) continue;
-
-
-
-
-                            context.Response.Close();
-                        }
-                    });
-                }
                 try
                 {
-                    
+                    if (httpListener == null || !httpListener.IsListening)
+                    {
+                        httpListener = new HttpListener();
+                        httpListener.Prefixes.Add(string.Format("http://+:" + ServerPort + "/"));
+                        httpListener.Start();
+
+                        string msg = string.Format("Running api server process (http://{0}:{1})", ServerIP, ServerPort);
+                        logControl.WriteLog(ServiceName, "fnRunRestAPIServer", msg, LogControl.LogLevel.Info);
+
+                        Task.Factory.StartNew(() =>
+                        {
+                            while (httpListener != null)
+                            {
+
+                                HttpListenerContext context = this.httpListener.GetContext();
+
+                                // enum에 포함된 HTTP 요청만 판단
+                                string httpmethod = context.Request.HttpMethod;
+                                if (!Enum.IsDefined(typeof(HttpMethodType), httpmethod)) continue;
+
+
+                                context.Response.Close();
+                            }
+                        });
+                    }
                 }
                 catch (Exception a)
                 {
-                    Debug.WriteLine(a.StackTrace);
-                    /*if (strArg.Equals("-debug", StringComparison.OrdinalIgnoreCase))
-                    {
-                        string strMsg = string.Format("{0} - {1}", "fnRunRestAPIServer", a.Message);
-
-                        // logControl.ConsoleLogWrite(strMsg);
-                    }
-                    */
-                    // logControl.LogWrite(ServiceName, "fnRunRestAPIServer", a.Message);
-                    // logControl.LogWrite(ServiceName, "fnRunRestAPIServer", ServerIP);
-                    // logControl.LogWrite(ServiceName, "fnRunRestAPIServer", ServerPort);
+                    string msg = string.Format("Failed server information (http://{0}:{1})", ServerIP, ServerPort);
+                    logControl.WriteLog(ServiceName, "fnRunRestAPIServer", a.Message, LogControl.LogLevel.Error);
+                    logControl.WriteLog(ServiceName, "fnRunRestAPIServer", msg, LogControl.LogLevel.Error);
                 }
             }
 
@@ -148,24 +146,20 @@ namespace RestAPIServer.UserDefineClass
                     {
                         httpListener.Stop();
                     }
-                    // logControl.LogWrite(ServiceName, "Stop", "서비스 종료");
+                    logControl.WriteLog(ServiceName, "Stop", "Stop Service", LogControl.LogLevel.Info);
                     Environment.Exit(0);
                 }
                 catch (Exception a)
                 {
-                    if (strArg.Equals("-debug", StringComparison.OrdinalIgnoreCase))
-                    {
-                        string strMsg = string.Format("{0} - {1}", "Stop", a.Message);
-                        // logControl.ConsoleLogWrite(strMsg);
-                    }
-                    // logControl.LogWrite(ServiceName, "Stop", a.Message);
+                    logControl.WriteLog(ServiceName, "Stop", a.Message, LogControl.LogLevel.Error);
                 }
             }
 
 
             public void Run()
             {
-                fnRunRestAPIServer();
+                Init();
+                FnRunRestAPIServer();
 
                 while (!bExit)
                 {

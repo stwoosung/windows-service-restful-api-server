@@ -33,6 +33,10 @@
             // 
             // serviceProcessInstaller1
             // 
+
+            // 로그인 설정 팝업되지 않게
+            this.serviceProcessInstaller1.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
+
             this.serviceProcessInstaller1.Password = null;
             this.serviceProcessInstaller1.Username = null;
             // 

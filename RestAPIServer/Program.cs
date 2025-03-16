@@ -31,28 +31,26 @@ namespace RestAPIServer
                                 SelfInstaller.UninstallMe();
                             }
                             else if (args[0].Equals("-debug", StringComparison.OrdinalIgnoreCase))
-                            {
-                                LogControl.isDebugMode = args[0];
-                                
+                            {   
                                 RestAPIServerService service = new RestAPIServerService();
-                                service.fnStartAndStopService(args);
+                                service.FnStartService(args);
                             }
                             else
                             {
-                                logControl.WriteConsoleLog("Invalid argument!");
+                                logControl.WriteConsoleLog("Invalid argument! Not running process!");
                             }
                         }
                     }
                     else
                     {
                         RestAPIServerService service = new RestAPIServerService();
-                        service.fnStartAndStopService(args);
+                        service.FnStartService(args);
                     }
                 }
             }
             catch (Exception e)
             {
-                logControl.WriteLog("RestAPIServer", "Main", e.Message);
+                logControl.WriteLog("RestAPIServer", "Main", e.Message, LogControl.LogLevel.Error);
             }
         }
 

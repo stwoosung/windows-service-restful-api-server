@@ -9,6 +9,7 @@ namespace RestAPIServer
         
         public static bool InstallMe()
         {
+            bool result;
             try
             {
                 ManagedInstallerClass.InstallHelper(new string[] {
@@ -17,13 +18,16 @@ namespace RestAPIServer
             }
             catch
             {
-                return false;
+                result = false;
+                return result;
             }
-            return true;
+            result = true;
+            return result;
         }
 
         public static bool UninstallMe()
         {
+            bool result;
             try
             {
                 ManagedInstallerClass.InstallHelper(new string[] {
@@ -32,9 +36,11 @@ namespace RestAPIServer
             }
             catch
             {
-                return false;
+                result = false;
+                return result;
             }
-            return true;
+            result = true;
+            return result;
         }
     }
 }
