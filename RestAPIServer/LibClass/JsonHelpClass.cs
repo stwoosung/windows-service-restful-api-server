@@ -10,7 +10,33 @@ namespace RestAPIServer.LibClass
         private LogControl logControl = new LogControl();
         private string ServiceName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
 
-        public string FnGetPkgInfo(string key)
+
+        public string FnReadJson(string path)
+        {
+            string jsonData = string.Empty;
+            try
+            {
+                using (StreamReader jr = new StreamReader(path))
+                {
+                    jsonData = jr.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                logControl.WriteLog(ServiceName, "fnRunRestAPIServer", e.Message, LogControl.LogLevel.Error);
+            }
+            return jsonData;
+        }
+
+        /// <summary>
+        /// Env 설정값 읽어오기
+        /// </summary>
+        /// <param name="pKey">상위(부모) Key</param>
+        /// <param name="cKey">하위(자식) Key</param>
+        /// <returns>
+        /// Setting Value
+        /// </returns>
+        public string FnGetEnvironmentInfo(string pKey, string cKey)
         {
             DirectoryInfo topDir = Directory.GetParent(Assembly.GetEntryAssembly().Location);
             string PreDirPath = topDir.Parent.FullName;
@@ -25,11 +51,11 @@ namespace RestAPIServer.LibClass
                     string jsonData = jr.ReadToEnd();
                     JObject jsonObject = JObject.Parse(jsonData);
 
-                    if (jsonObject.TryGetValue("REST_API", out JToken restApiToken) && restApiToken.Type == JTokenType.Object)
+                    if (jsonObject.TryGetValue(pKey, out JToken restApiToken) && restApiToken.Type == JTokenType.Object)
                     {
-                        if (restApiToken[key] != null)
+                        if (restApiToken[cKey] != null)
                         {
-                            info = restApiToken[key].ToString(); 
+                            info = restApiToken[cKey].ToString();
                         }
                     }
                 }
