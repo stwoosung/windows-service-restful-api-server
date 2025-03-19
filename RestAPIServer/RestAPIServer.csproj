@@ -73,6 +73,9 @@
   <ItemGroup>
     <Compile Include="LibClass\JsonHelpClass.cs" />
     <Compile Include="LibClass\LogControl.cs" />
+    <Compile Include="LibClass\OleDBService.cs" />
+    <Compile Include="Models\DeviceInfo.cs" />
+    <Compile Include="Models\TagInfo.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
