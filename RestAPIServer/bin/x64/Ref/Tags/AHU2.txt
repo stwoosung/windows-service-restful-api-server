@@ -1,0 +1,20 @@
+[
+            {
+              'TagIndex': 0,
+              'TagName': 'FCU_M2F_12L_TSP',
+              'TagDescription': '2층 복도좌 FCU 온도설정',
+              'TagType': 'Analog'
+            },
+            {
+              'TagIndex': 1,
+              'TagName': 'FCU_M2F_2FR_TSP',
+              'TagDescription': '2층 복도우 FCU 온도설정',
+              'TagType': 'Analog'
+            },
+            {
+              'TagIndex': 2,
+              'TagName': 'AHU_2_CSV_C',
+              'TagDescription': '2층 냉난방 밸브 제어',
+              'TagType': 'Analog',
+            }
+]

@@ -1,0 +1,20 @@
+[
+            {
+              'TagIndex': 0,
+              'TagName': 'CAM_001',
+              'TagDescription': 'A동1층복도',
+              'TagType': 'String'
+            },
+            {
+              'TagIndex': 1,
+              'TagName': 'CAM_002',
+              'TagDescription': 'A동3층복도',
+              'TagType': 'String'
+            },
+            {
+              'TagIndex': 2,
+              'TagName': 'CAM_003',
+              'TagDescription': '체육관',
+              'TagType': 'String'
+            }
+]

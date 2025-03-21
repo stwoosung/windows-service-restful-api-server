@@ -23,7 +23,7 @@ namespace RestAPIServer.LibClass
             }
             catch (Exception e)
             {
-                logControl.WriteLog(ServiceName, "FnReadJson", e.Message, LogControl.LogLevel.Error);
+                logControl.WriteLog(ServiceName, "fnRunRestAPIServer", e.Message, LogControl.LogLevel.Error);
             }
             return jsonData;
         }
@@ -55,14 +55,14 @@ namespace RestAPIServer.LibClass
                     {
                         if (restApiToken[cKey] != null)
                         {
-                            info = restApiToken[cKey].ToString();
+                            info = restApiToken[cKey].ToString(); 
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                logControl.WriteLog(ServiceName, "FnGetEnvironmentInfo", e.Message, LogControl.LogLevel.Error);
+                logControl.WriteLog(ServiceName, "fnRunRestAPIServer", e.Message, LogControl.LogLevel.Error);
             }
 
             return info;

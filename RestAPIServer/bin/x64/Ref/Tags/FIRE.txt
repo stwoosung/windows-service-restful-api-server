@@ -1,0 +1,20 @@
+[
+            {
+              'TagIndex': 0,
+              'TagName': 'FIRE_001',
+              'TagDescription': '화재감지기 01',
+              'TagType': 'Digital'
+            },
+            {
+              'TagIndex': 1,
+              'TagName': 'FIRE_002',
+              'TagDescription': '화재감지기 02',
+              'TagType': 'Digital'
+            },
+            {
+              'TagIndex': 2,
+              'TagName': 'FIRE_003',
+              'TagDescription': '화재감지기 03',
+              'TagType': 'Digital',
+            }
+]

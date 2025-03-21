@@ -1,0 +1,41 @@
+USE DUMP;
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Tag')
+BEGIN
+    CREATE TABLE Tag (
+        TagIndex INT NOT NULL,
+        TagName NVARCHAR(50) NOT NULL,
+        TagValueAnalog FLOAT NULL,
+        TagValueDigital INT NULL,
+        TagValueString NVARCHAR(50) NULL,
+        TagDevice NVARCHAR(50) NOT NULL,
+		TagIsAlarm INT NOT NULL,
+        UpdateDate DATETIME NOT NULL,
+        PRIMARY KEY (TagIndex) 
+    );
+	INSERT INTO Tag (TagIndex, TagName, TagValueAnalog, TagValueDigital, TagValueString, TagDevice, TagIsAlarm, UpdateDate) VALUES
+	(1, 'FCU_M1F_1FL_TSP', 5.5, NULL, NULL, 'AHU1', 1, GETDATE()),
+	(2, 'FCU_M1F_1FR_TSP', 6.9, NULL, NULL, 'AHU1', 0, GETDATE()),
+	(3, 'AHU_1_CSV_C', 5.1, NULL, NULL, 'AHU1', 1, GETDATE());
+
+	INSERT INTO Tag (TagIndex, TagName, TagValueAnalog, TagValueDigital, TagValueString, TagDevice, TagIsAlarm, UpdateDate) VALUES
+	(4, 'FCU_M2F_2FL_TSP', 3.0, NULL, NULL, 'AHU2', 1, GETDATE()),
+	(5, 'FCU_M2F_2FR_TSP', 1.2, NULL, NULL, 'AHU2', 1, GETDATE()),
+	(6, 'AHU_2_CSV_C', 8.8, NULL, NULL, 'AHU2', 0, GETDATE());
+
+	INSERT INTO Tag (TagIndex, TagName, TagValueAnalog, TagValueDigital, TagValueString, TagDevice, TagIsAlarm, UpdateDate) VALUES
+	(7, 'FCU_M3F_3FL_TSP', 3.0, NULL, NULL, 'AHU3', 1, GETDATE()),
+	(8, 'FCU_M3F_3FR_TSP', 1.2, NULL, NULL, 'AHU3', 1, GETDATE()),
+	(9, 'AHU_3_CSV_C', 8.8, NULL, NULL, 'AHU3', 0, GETDATE());
+
+	INSERT INTO Tag (TagIndex, TagName, TagValueAnalog, TagValueDigital, TagValueString, TagDevice, TagIsAlarm, UpdateDate) VALUES
+	(10, 'FIRE_001', NULL, 1, NULL, 'FIRE', 1, GETDATE()),
+	(11, 'FIRE_002', NULL, 1, NULL, 'FIRE', 1, GETDATE()),
+	(12, 'FIRE_003', NULL, 1, NULL, 'FIRE', 1, GETDATE());
+
+	INSERT INTO Tag (TagIndex, TagName, TagValueAnalog, TagValueDigital, TagValueString, TagDevice, TagIsAlarm, UpdateDate) VALUES
+	(13, 'CAM_001', NULL, NULL, 'rtsp://192.168.50.99/cam1.smp', 'CCTV', 1, GETDATE()),
+	(14, 'CAM_002', NULL, NULL, 'rtsp://192.168.50.101/cam1.smp', 'CCTV', 1, GETDATE()),
+	(15, 'CAM_003', NULL, NULL, 'rtsp://192.168.50.99/cam1.smp', 'CCTV', 1, GETDATE());
+
+END

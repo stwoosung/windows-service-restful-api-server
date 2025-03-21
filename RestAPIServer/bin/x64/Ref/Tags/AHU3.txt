@@ -1,0 +1,20 @@
+[
+            {
+              'TagIndex': 0,
+              'TagName': 'FCU_M3F_3FL_TSP',
+              'TagDescription': '3층 복도좌 FCU 온도설정',
+              'TagType': 'Analog'
+            },
+            {
+              'TagIndex': 1,
+              'TagName': 'FCU_M3F_3FR_TSP',
+              'TagDescription': '3층 복도우 FCU 온도설정',
+              'TagType': 'Analog'
+            },
+            {
+              'TagIndex': 2,
+              'TagName': 'AHU_3_CSV_C',
+              'TagDescription': '3층 냉난방 밸브 제어',
+              'TagType': 'Analog',
+            }
+]

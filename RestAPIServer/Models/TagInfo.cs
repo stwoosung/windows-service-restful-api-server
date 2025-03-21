@@ -7,8 +7,8 @@
         public string TagDescription;
         public string TagType;
         public string TagValueString;
-        public int TagValueAnalog;
-        public bool TagValueDigital;
-        public bool TagIsAlarm;
+        public float TagValueAnalog;
+        public int TagValueDigital;
+        public int TagIsAlarm;
     }
 }

@@ -35,7 +35,7 @@ namespace RestAPIServer.LibClass
                     ConnDB.Close();
                 }
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
                 logControl.WriteLog(ServiceName, "OleDBService Destructor", e.Message, LogControl.LogLevel.Error);
             }

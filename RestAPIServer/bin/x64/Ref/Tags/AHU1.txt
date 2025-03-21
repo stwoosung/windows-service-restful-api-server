@@ -1,0 +1,20 @@
+[
+            {
+              'TagIndex': 0,
+              'TagName': 'FCU_M1F_1FL_TSP',
+              'TagDescription': '1층 복도좌 FCU 온도설정',
+              'TagType': 'Analog'
+            },
+            {
+              'TagIndex': 1,
+              'TagName': 'FCU_M1F_1FR_TSP',
+              'TagDescription': '1층 복도우 FCU 온도설정',
+              'TagType': 'Analog'
+            },
+            {
+              'TagIndex': 2,
+              'TagName': 'AHU_1_CSV_C',
+              'TagDescription': '1층 냉난방 밸브 제어',
+              'TagType': 'Analog',
+            }
+]
