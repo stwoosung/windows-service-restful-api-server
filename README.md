@@ -8,6 +8,10 @@
 ### ✨ API Specs
 
 #### 1️⃣ 디바이스 리스트 조회
+
+<details>
+<summary>자세히 보기</summary>
+
 ##### Method
 > HTTP/1.1 GET
 ##### Path
@@ -36,9 +40,15 @@
 ##### Result Preview
 > <img src="./img/api_deviceList.JPG">
 
+</details>
+
 <br>
 
 #### 2️⃣ 특정 디바이스의 하위 태그 조회
+
+<details>
+<summary>자세히 보기</summary>
+
 ##### Method
 > HTTP/1.1 GET
 ##### Path
@@ -66,9 +76,15 @@
 ##### Result Preview
 > <img src="./img/api_device.JPG">
 
+</details>
+
 <br>
 
 #### 3️⃣ 특정 태그 조회
+
+<details>
+<summary>자세히 보기</summary>
+
 ##### Method
 > HTTP/1.1 GET
 ##### Path
@@ -94,9 +110,15 @@
 ##### Result Preview
 > <img src="./img/api_tag.JPG">
 
+</details>
+
 <br>
 
 #### 4️⃣ 알람 발생 태그 조회
+
+<details>
+<summary>자세히 보기</summary>
+
 ##### Method
 > HTTP/1.1 GET
 ##### Path
@@ -123,6 +145,8 @@
 > 　
 ##### Result Preview
 > <img src="./img/api_alarm.JPG">
+
+</details>
 
 <br><br><br><br><br>
 # 📌 Architecture
